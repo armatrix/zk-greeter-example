@@ -17,10 +17,9 @@ export default async function (hre: HardhatRuntimeEnvironment) {
   // Initialize the wallet.
   const wallet = new Wallet(PrivateKey)
 
-  const provider = ethers.getDefaultProvider()
+  const provider = ethers.getDefaultProvider("https://testnet.era.zksync.dev")
   const balance = await provider.getBalance(wallet.address)
   console.log("account: ", wallet.address)
-  console.log("balance: ", balance)
   const { chainId } = await provider.getNetwork()
 
   console.log("chainId: ", chainId)
@@ -38,7 +37,7 @@ export default async function (hre: HardhatRuntimeEnvironment) {
   const depositHandle = await deployer.zkWallet.deposit({
     to: deployer.zkWallet.address,
     token: utils.ETH_ADDRESS,
-    amount: deploymentFee.mul(2),
+    amount: deploymentFee.mul(20),
   })
   // Wait until the deposit is processed on zkSync
   await depositHandle.wait()
