@@ -17,6 +17,14 @@ export default async function (hre: HardhatRuntimeEnvironment) {
   // Initialize the wallet.
   const wallet = new Wallet(PrivateKey)
 
+  const provider = ethers.getDefaultProvider()
+  const balance = await provider.getBalance(wallet.address)
+  console.log("account: ", wallet.address)
+  console.log("balance: ", balance)
+  const { chainId } = await provider.getNetwork()
+
+  console.log("chainId: ", chainId)
+
   // Create deployer object and load the artifact of the contract you want to deploy.
   const deployer = new Deployer(hre, wallet)
   const artifact = await deployer.loadArtifact("Greeter")
